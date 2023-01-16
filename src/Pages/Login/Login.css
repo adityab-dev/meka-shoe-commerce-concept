@@ -1,0 +1,9 @@
+.login-container {
+  background: var(--primary-bg-red);
+}
+
+.login-register-btn,
+.login-form > button {
+  color: var(--primary-btn-color);
+  background: var(--primary-btn-bg);
+}
