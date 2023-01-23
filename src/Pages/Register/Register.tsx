@@ -1,49 +1,32 @@
-import "./Register.css";
+import { Link, Form } from "react-router-dom";
 
-import logoSrc from "../../Assets/logo.png";
+import { loginPath } from "../../paths/paths";
 
 function Register() {
-  const form = (
-    <form className="register-form">
-      <input
-        type="text"
-        placeholder="username/email"
-      />
-      <input
-        type="password"
-        placeholder="password"
-      />
-      <input
-        type="password"
-        placeholder="confirm password"
-      />
-      <button type="submit">Signup</button>
-    </form>
-  );
+    const logo = <img src={undefined} alt="logo" />;
 
-  const signInButton = (
-    <button
-      type="button"
-      className="register-signIn-btn"
-    >
-      Sign In
-    </button>
-  );
+    const registerForm = (
+        <Form method="post">
+            <input type="text" placeholder="username/email" />
+            <input type="text" placeholder="password" />
+            <input type="password" placeholder="confirm password" />
+            <button type="submit">Signup</button>
+        </Form>
+    );
 
-  const logo = (
-    <img
-      src={logoSrc}
-      alt="logo"
-    />
-  );
+    const signUpButton = (
+        <button type="submit">
+            <Link to={loginPath}>Sign In</Link>
+        </button>
+    );
 
-  return (
-    <section className="register-container">
-      {logo}
-      {form}
-      {signInButton}
-    </section>
-  );
+    return (
+        <main>
+            {logo}
+            {registerForm}
+            {signUpButton}
+        </main>
+    );
 }
 
 export default Register;
