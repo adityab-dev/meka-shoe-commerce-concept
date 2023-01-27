@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
 
 import { enterDataOnFilterField, checkboxInteraction } from "../../store/slices/appliedFilters-slice";
@@ -10,44 +9,50 @@ export type AppliedFilters = {
     checkedColors: string[];
     checkedSizes: number[];
     size: string;
-    range: string;
+    price: string;
 };
 
-function Sidebar() {
-    const initialState: AppliedFilters = {
-        brand: "",
-        checkedBrands: [],
-        size: "",
-        checkedSizes: [],
-        color: "",
-        checkedColors: [],
-        range: "",
-    };
+const brand = "brand";
+const color = "color";
+const size = "size";
+const price = "price";
+const checkedBrands = "checkedBrands";
+const checkedSizes = "checkedSizes";
+const checkedColors = "checkedColors";
 
-    const [filters, setFilters] = useState<AppliedFilters>(initialState);
+function Sidebar() {
+    const stateFromAppliedFilters = useAppSelector((state) => state.appliedFilters);
 
     const dispatch = useAppDispatch();
-    const productsState = useAppSelector((state) => state.products);
 
     type onChangeEvent = React.ChangeEvent<HTMLInputElement>;
+
+    // functions check value of name. if name !== property fields in state, it is still being added.
+    function toCheckNamesOnFields(name: string) {
+        if (name === color || name === brand || name === size || name === price) {
+            return true;
+        }
+    }
+
+    function toCheckNamesOnCheckBoxes(name: string) {
+        if (name === checkedColors || name === checkedBrands || name === checkedSizes) {
+            return true;
+        }
+    }
 
     function filterChangeHandler(event: onChangeEvent) {
         const { name, value } = event.target;
 
-        setFilters((prevFilters) => {
-            const newFilters = { ...prevFilters, [name]: value };
-            return newFilters;
-        });
-
-        dispatch(enterDataOnFilterField({ ...filters, [name]: value }));
+        if (toCheckNamesOnFields(name)) {
+            dispatch(enterDataOnFilterField({ ...stateFromAppliedFilters, [name]: value }));
+        }
     }
 
     function checkboxChangeHandler(event: onChangeEvent) {
         const { value, name, checked } = event.target;
-
-        console.log(name, value, checked);
-
-        dispatch(checkboxInteraction({ name, value, checked }));
+        if (toCheckNamesOnCheckBoxes(name)) {
+            dispatch(checkboxInteraction({ name, value, checked }));
+        }
     }
 
     const searchBrand = (
@@ -79,7 +84,7 @@ function Sidebar() {
     const range = (
         <section className="select-range-container">
             <label htmlFor="price">Price</label>
-            <input type="range" min="0" max="1799" id="price" name="range" onChange={filterChangeHandler} />
+            <input type="range" min="0" max="1799" id="price" name="price" onChange={filterChangeHandler} />
         </section>
     );
 
@@ -90,7 +95,7 @@ function Sidebar() {
                 id="search-color"
                 placeholder="Search colour"
                 type="text"
-                name="color"
+                name={color}
                 onChange={filterChangeHandler}
             />
 
@@ -106,7 +111,16 @@ function Sidebar() {
     const searchSize = (
         <section className="search-size-container">
             <label htmlFor="search-size">Size</label>
-            <input id="search-size" placeholder="Search brand" type="text" name="size" onChange={filterChangeHandler} />
+            <input
+                id="search-size"
+                placeholder="Search size"
+                type="number"
+                min="30"
+                max="32"
+                step="1"
+                name="size"
+                onChange={filterChangeHandler}
+            />
 
             <label htmlFor="a">30</label>
             <input type="checkbox" name="checkedSizes" value="30" id="30" onChange={checkboxChangeHandler} />

@@ -9,7 +9,7 @@ const initialAppliedFiltersState: AppliedFilters = {
     checkedSizes: [],
     color: "",
     checkedColors: [],
-    range: "",
+    price: "",
 };
 
 const appliedFiltersSlice = createSlice({
@@ -17,9 +17,15 @@ const appliedFiltersSlice = createSlice({
     initialState: initialAppliedFiltersState,
     reducers: {
         enterDataOnFilterField(state, action: PayloadAction<AppliedFilters>) {
-            const filters = { ...action.payload };
+            const { price, size, brand, color, checkedBrands, checkedColors, checkedSizes } = action.payload;
 
-            return { ...filters };
+            state.brand = brand;
+            state.price = price;
+            state.size = size;
+            state.color = color;
+            state.checkedBrands = checkedBrands;
+            state.checkedColors = checkedColors;
+            state.checkedSizes = checkedSizes;
         },
 
         checkboxInteraction(state, action: PayloadAction<{ name: string; value: string; checked: boolean }>) {

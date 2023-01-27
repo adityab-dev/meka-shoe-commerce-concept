@@ -2,7 +2,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../store/hooks/hooks";
-import { loginRequest } from "../../store/slices/users.-slice";
+import { loginRequest } from "../../store/slices/users-slice";
 
 import { arrivalProductsPath, registerPath } from "../../paths/paths";
 
@@ -11,68 +11,50 @@ function Login() {
 
     const [inputUsername, SetInputUsername] = useState<string>("");
 
-    const [hasInvalidCredentials, setHasInvalidCredentials] = useState<boolean | undefined>();
+    const [invalidCredentials, setInvalidCredentials] = useState<boolean | undefined>();
 
     const dispatch = useAppDispatch();
 
-    function inputChangeHandler(event: React.ChangeEvent<HTMLInputElement>): void {
+    function inputChangeHandler(event: React.ChangeEvent<HTMLInputElement>) {
         SetInputUsername(event.target.value);
     }
 
     function fomrSubmitHandler(event: React.FormEvent) {
         event.preventDefault();
 
-        let isValid: boolean = false;
+        dispatch(loginRequest(inputUsername));
 
-        users.forEach((user) => {
-            if (user.username === inputUsername) {
-                isValid = true;
-            }
-        });
-
-        if (isValid) {
-            dispatch(loginRequest(inputUsername));
-            setHasInvalidCredentials(false);
-        } else {
-            setHasInvalidCredentials(true);
-        }
+        setInvalidCredentials(true);
     }
-
-    const logo = <img src={undefined} alt="logo" />;
-
-    const loginForm = (
-        <form onSubmit={fomrSubmitHandler}>
-            <input
-                type="text"
-                placeholder="username/email"
-                id="email"
-                name="email"
-                required
-                onChange={inputChangeHandler}
-            />
-
-            <input type="password" placeholder="password" id="password" name="password" required />
-
-            <button type="submit">Login</button>
-        </form>
-    );
-
-    const loginButton = (
-        <button type="button">
-            <Link to={registerPath}>Register</Link>{" "}
-        </button>
-    );
 
     return (
         <main className="login-container">
-            {hasInvalidCredentials === false ? (
+            {users.loginStatus.isLoggedIn === true ? (
                 <Navigate to={arrivalProductsPath} />
             ) : (
                 <>
-                    {hasInvalidCredentials ? <p>Invalid Credentials</p> : null}
-                    {logo}
-                    {loginForm}
-                    {loginButton}
+                    {invalidCredentials ? <p>Invalid Credentials</p> : null}
+
+                    <img src={undefined} alt="logo" />
+
+                    <form onSubmit={fomrSubmitHandler}>
+                        <input
+                            type="text"
+                            placeholder="username/email"
+                            id="email"
+                            name="email"
+                            required
+                            onChange={inputChangeHandler}
+                        />
+
+                        <input type="password" placeholder="password" id="password" name="password" required />
+
+                        <button type="submit">Login</button>
+                    </form>
+
+                    <button type="button">
+                        <Link to={registerPath}>Register</Link>{" "}
+                    </button>
                 </>
             )}
         </main>

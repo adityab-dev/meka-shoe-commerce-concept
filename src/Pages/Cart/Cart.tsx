@@ -1,7 +1,9 @@
-import React from "react";
+import { useAppSelector } from "../../store/hooks/hooks";
 
 function Cart() {
-    return <div>Cart</div>;
+    const isUserLoggedIn = useAppSelector((state) => state.users.loginStatus.isLoggedIn);
+
+    return isUserLoggedIn ? <div>Cart</div> : <div>Cart</div>;
 }
 
 export default Cart;

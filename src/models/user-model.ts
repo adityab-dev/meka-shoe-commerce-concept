@@ -1,5 +1,9 @@
 export type user = {
     username: string;
     password: string;
-    isLoggedIn: boolean;
+    cart: CartItem[];
 };
+
+export type CartItem = { item: string; quantityInCart: number };
+
+export type Cart = CartItem[];
