@@ -5,65 +5,84 @@ import { Link } from "react-router-dom";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
-import { arrivalProductsPath, manProductsPath, womanProductPaths, cartPath } from "../../paths/paths";
+import {
+  arrivalProductsPath,
+  manProductsPath,
+  womanProductPaths,
+  cartPath,
+} from "../../paths/paths";
 
 import { logout } from "../../store/slices/users-slice";
 
+import { resetFilters } from "../../store/slices/products-slice";
+
 function MainNavigationHeader() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    function logoutHandler() {
-        dispatch(logout());
-    }
+  function logoutHandler() {
+    dispatch(logout());
+  }
 
-    // currently logs out in 1 min
-    useEffect(() => {
-        // 10 mins
-        const delay_ms = 600000;
+  function onPageChange() {
+    dispatch(resetFilters());
+  }
 
-        setTimeout(() => {
-            dispatch(logout());
-        }, delay_ms);
-    }, [dispatch]);
+  // currently logs out in 10 min
+  useEffect(() => {
+    // 10 mins
+    const delay_ms = 6000000;
 
-    const Logo = <img src={undefined} alt="logo" />;
+    setTimeout(() => {
+      dispatch(logout());
+    }, delay_ms);
+  }, [dispatch]);
 
-    const NavList = (
-        <ul>
-            <li>
-                <Link to={arrivalProductsPath}>New Arrival</Link>
-            </li>
-            <li>
-                <Link to={manProductsPath}>Man</Link>
-            </li>
-            <li>
-                <Link to={womanProductPaths}>Woman</Link>
-            </li>
-            <li>
-                <Link to={cartPath}>Cart</Link>
-            </li>
-        </ul>
-    );
+  const Logo = <img src={undefined} alt="logo" />;
 
-    const HeaderSearchInput = <input type="text" placeholder="search" />;
+  const NavList = (
+    <ul>
+      <li>
+        <Link to={arrivalProductsPath} onClick={onPageChange}>
+          New Arrival
+        </Link>
+      </li>
+      <li>
+        <Link to={manProductsPath} onClick={onPageChange}>
+          Man
+        </Link>
+      </li>
+      <li>
+        <Link to={womanProductPaths} onClick={onPageChange}>
+          Woman
+        </Link>
+      </li>
+      <li>
+        <Link to={cartPath} onClick={onPageChange}>
+          Cart
+        </Link>
+      </li>
+    </ul>
+  );
 
-    const HeaderHamburder = <GiHamburgerMenu />;
+  const HeaderSearchInput = <input type="text" placeholder="search" />;
 
-    const logoutButton = (
-        <button type="button" onClick={logoutHandler}>
-            Logout
-        </button>
-    );
+  const HeaderHamburder = <GiHamburgerMenu />;
 
-    return (
-        <nav>
-            {Logo}
-            {NavList}
-            {HeaderSearchInput}
-            {HeaderHamburder}
-            {logoutButton}
-        </nav>
-    );
+  const logoutButton = (
+    <button type="button" onClick={logoutHandler}>
+      Logout
+    </button>
+  );
+
+  return (
+    <nav>
+      {Logo}
+      {NavList}
+      {HeaderSearchInput}
+      {HeaderHamburder}
+      {logoutButton}
+    </nav>
+  );
 }
 
 export default MainNavigationHeader;
