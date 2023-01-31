@@ -5,10 +5,12 @@ import { loginPath } from "../../paths/paths";
 
 import MainNavigationHeader from "../../Components/MainNavigationHeader/MainNavigationHeader";
 
+import './HeaderNavbarLayout.css'
+
 function HeaderNavbarLayout() {
     const isUserLoggedIn = useAppSelector((state) => state.users.loginStatus.isLoggedIn);
     return (
-        <header>
+        <header className="headerLayout-header">
             {isUserLoggedIn === false ? (
                 <Navigate to={loginPath} />
             ) : (

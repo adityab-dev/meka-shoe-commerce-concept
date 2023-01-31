@@ -1,0 +1,48 @@
+.content-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 350px;
+  gap: 1.5rem;
+
+  width: 75%;
+
+  color: white;
+}
+
+article > * {
+  padding: .1rem 0;
+}
+
+.product-btn {
+  background: #b40d0d;
+  color: white;
+
+  border: none;
+  border-radius: .5rem;
+
+  padding: .5rem 1.2rem;
+}
+
+.content-container > article {
+  text-align: center;
+  font-size: 1.1rem;
+
+  background: #ca021c;
+
+  border-radius: 0.75rem;
+}
+
+.products-img-container {
+  height: 15rem;
+  width: 15rem;
+}
+
+.products-img-container > img {
+  height: inherit;
+  width: inherit;
+}
+
+.products-warning {
+  padding: 0;
+  margin: 0;
+}

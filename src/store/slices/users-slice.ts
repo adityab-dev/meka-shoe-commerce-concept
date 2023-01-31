@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import { user } from "../../models/user-model";
 
 const usersList: user[] = [
@@ -16,7 +17,7 @@ type UserData = {
 
 const usersData: UserData = {
   usersList: usersList,
-  loginStatus: { loggedInUser: "", isLoggedIn: false },
+  loginStatus: { loggedInUser: "", isLoggedIn: true },
 };
 
 const usersSlice = createSlice({
@@ -39,44 +40,91 @@ const usersSlice = createSlice({
 
     addToCart(
       state,
-      action: PayloadAction<{ item: string; username: string }>
+      action: PayloadAction<{
+        id: number;
+        title: string;
+        price: string;
+        brand: string;
+        colors: Array<string>;
+        sizes: Array<number>;
+        thumbnail: string;
+        quantity: number;
+        username: string;
+      }>
     ) {
-      const { item: itemAdded, username: loggedInUser } = action.payload;
+      const {
+        id,
+        brand,
+        sizes,
+        price,
+        thumbnail,
+        colors,
+        quantity,
+        title,
+        username: loggedInUser,
+      } = action.payload;
 
-      console.log("itemAdded", itemAdded, "user", loggedInUser);
+      const product = { id, brand, title, price, sizes, colors, thumbnail, quantity };
+
+      const { usersList } = state;
 
       let indexOfUser: number = 0;
+      let indexOfCartItem: number = 0;
 
       // gets us index of user. which will be used to operate on that user's cart.
-      for (let index = 0; index < state.usersList.length; index += 1) {
-        if (state.usersList[index].username === loggedInUser) {
-          indexOfUser = index;
-        }
-      }
+      usersList.findIndex((user, index) => {
+        if (user.username === loggedInUser) indexOfUser = index;
+        return null;
+      });
 
       // if item already exists quantityAdded += 1; else add Item to list
       let itemAlreadyExists = false;
 
-      const cart = state.usersList[indexOfUser].cart;
+      const cartOfUser = state.usersList[indexOfUser].cart;
 
-      cart.forEach((cartItemObj) => {
-        if (cartItemObj.item === itemAdded) {
-          cartItemObj.quantityInCart += 1;
+      for (let index = 0; index < cartOfUser.length; index += 1) {
+        if (cartOfUser[index].id === id) {
           itemAlreadyExists = true;
+          indexOfCartItem = index;
         }
-      });
-
-      if (!itemAlreadyExists) {
-        cart.push({ item: itemAdded, quantityInCart: 1 });
       }
+
+      if (!itemAlreadyExists) cartOfUser.push({ ...product, quantityInCart: 1 });
+      if (itemAlreadyExists) cartOfUser[indexOfCartItem].quantityInCart += 1;
     },
 
     logout(state) {
       const defaultLoginStatus = { loggedInUser: "", isLoggedIn: false };
       state.loginStatus = defaultLoginStatus;
     },
+
+    addToCartFromCartPage(
+      state,
+      action: PayloadAction<{ id: number; username: string; type: string }>
+    ) {
+      // ! NOTE: in usersList quantity doesn't change since quantityToCart is changed not quantity.
+      const { id, username, type } = action.payload;
+
+      const { usersList } = state;
+
+      const indexOfUser = usersList.findIndex((user) => user.username === username);
+
+      const cart = state.usersList[indexOfUser].cart;
+
+      const indexOfProduct = cart.findIndex((cartItem) => cartItem.id === +id);
+
+      let quantityInCart = cart[indexOfProduct].quantityInCart;
+
+      if (type === "decrement" && quantityInCart < 5)
+        state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart += 1;
+      if (type === "increment" && quantityInCart > 0) {
+        state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart -= 1;
+      }
+      quantityInCart = state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart;
+      if (quantityInCart === 0) state.usersList[indexOfUser].cart.splice(indexOfProduct, 1);
+    },
   },
 });
 
-export const { loginRequest, addToCart, logout } = usersSlice.actions;
+export const { loginRequest, addToCart, logout, addToCartFromCartPage } = usersSlice.actions;
 export default usersSlice;

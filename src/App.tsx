@@ -8,51 +8,53 @@ import Woman from "./Pages/Woman/Woman";
 import Cart from "./Pages/Cart/Cart";
 
 import {
-    loginPath,
-    registerPath,
-    manProductsPath,
-    womanProductPaths,
-    arrivalProductsPath,
-    cartPath,
+  loginPath,
+  registerPath,
+  manProductsPath,
+  womanProductPaths,
+  arrivalProductsPath,
+  cartPath,
 } from "../src/paths/paths";
 
 import HeaderNavbarLayout from "./Pages/HeaderNavbarLayout/HeaderNavbarLayout";
 import SidebarLayout from "./Pages/SidebarLayout/SidebarLayout";
+import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 
 function App() {
-    const router = createBrowserRouter([
+  const router = createBrowserRouter([
+    {
+      path: loginPath,
+      element: <Login />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: registerPath,
+      element: <Register />,
+    },
+    {
+      path: arrivalProductsPath,
+      element: <HeaderNavbarLayout />,
+      children: [
         {
-            path: loginPath,
-            element: <Login />,
+          path: arrivalProductsPath,
+          element: <SidebarLayout />,
+          children: [
+            { index: true, element: <Arrival /> },
+            {
+              path: manProductsPath,
+              element: <Man />,
+            },
+            {
+              path: womanProductPaths,
+              element: <Woman />,
+            },
+          ],
         },
-        {
-            path: registerPath,
-            element: <Register />,
-        },
-        {
-            path: arrivalProductsPath,
-            element: <HeaderNavbarLayout />,
-            children: [
-                {
-                    path: arrivalProductsPath,
-                    element: <SidebarLayout />,
-                    children: [
-                        { index: true, element: <Arrival /> },
-                        {
-                            path: manProductsPath,
-                            element: <Man />,
-                        },
-                        {
-                            path: womanProductPaths,
-                            element: <Woman />,
-                        },
-                    ],
-                },
-                { path: cartPath, element: <Cart /> },
-            ],
-        },
-    ]);
+        { path: cartPath, element: <Cart /> },
+      ],
+    },
+  ]);
 
-    return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 }
 export default App;

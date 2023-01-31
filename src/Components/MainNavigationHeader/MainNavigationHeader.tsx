@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
+import logo from '../../Assets/logo.png'
+
 import {
   arrivalProductsPath,
   manProductsPath,
@@ -16,11 +18,14 @@ import { logout } from "../../store/slices/users-slice";
 
 import { resetFilters } from "../../store/slices/products-slice";
 
+import './MainNavigationHeader.css'
+
 function MainNavigationHeader() {
   const dispatch = useDispatch();
 
   function logoutHandler() {
     dispatch(logout());
+    dispatch(resetFilters());
   }
 
   function onPageChange() {
@@ -37,10 +42,10 @@ function MainNavigationHeader() {
     }, delay_ms);
   }, [dispatch]);
 
-  const Logo = <img src={undefined} alt="logo" />;
+  const Logo = <img src={logo} alt="logo" />;
 
   const NavList = (
-    <ul>
+    <ul className="navHeader-navList">
       <li>
         <Link to={arrivalProductsPath} onClick={onPageChange}>
           New Arrival
@@ -57,9 +62,7 @@ function MainNavigationHeader() {
         </Link>
       </li>
       <li>
-        <Link to={cartPath} onClick={onPageChange}>
-          Cart
-        </Link>
+        <Link to={cartPath}>Cart</Link>
       </li>
     </ul>
   );
@@ -75,7 +78,7 @@ function MainNavigationHeader() {
   );
 
   return (
-    <nav>
+    <nav className="navheader-navbar">
       {Logo}
       {NavList}
       {HeaderSearchInput}

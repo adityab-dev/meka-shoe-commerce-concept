@@ -1,0 +1,53 @@
+.sidebar-container {
+  width: 25%;
+
+  background: #760909;
+
+  color: white;
+
+  border-top-right-radius: 10%;
+  border-bottom-right-radius: 10%;
+}
+
+.search-brand-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-checkboxes {
+  height: 1rem;
+  width: 1rem;
+
+  margin-right: .6rem;
+}
+
+*:focus {
+  outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.sidebar-inputs {
+  width: 90%;
+
+  border-radius: .25rem;
+}
+
+.select-range-container {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type=range] {
+  width: 75%;
+}
+
+section > label {
+  font-size: 1.1rem;
+}
