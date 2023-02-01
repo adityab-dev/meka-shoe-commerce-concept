@@ -1,3 +1,20 @@
+.sidebarlayout-sidebar-container {
+  margin-top: calc(3rem + 365px);
+
+  min-width: 100%;
+}
+
 .side-layout-container {
+  min-width: 30%;
+
+  display: flex; 
+}
+
+.side-layout-center {
+  width: 100%;
+}
+
+.sidebarlayout-sidebar-container {
   display: flex;
+  justify-content: center;
 }

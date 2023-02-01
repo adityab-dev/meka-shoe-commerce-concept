@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
-import logo from '../../Assets/logo.png'
+import logo from "../../Assets/logo.png";
 
 import {
   arrivalProductsPath,
@@ -18,7 +18,7 @@ import { logout } from "../../store/slices/users-slice";
 
 import { resetFilters } from "../../store/slices/products-slice";
 
-import './MainNavigationHeader.css'
+import "./MainNavigationHeader.css";
 
 function MainNavigationHeader() {
   const dispatch = useDispatch();
@@ -32,10 +32,10 @@ function MainNavigationHeader() {
     dispatch(resetFilters());
   }
 
-  // currently logs out in 10 min
+  // currently logs out in 100 min
   useEffect(() => {
     // 10 mins
-    const delay_ms = 6000000;
+    const delay_ms = 60000000;
 
     setTimeout(() => {
       dispatch(logout());
@@ -45,7 +45,7 @@ function MainNavigationHeader() {
   const Logo = <img src={logo} alt="logo" />;
 
   const NavList = (
-    <ul className="navHeader-navList">
+    <ul>
       <li>
         <Link to={arrivalProductsPath} onClick={onPageChange}>
           New Arrival
@@ -79,11 +79,17 @@ function MainNavigationHeader() {
 
   return (
     <nav className="navheader-navbar">
-      {Logo}
-      {NavList}
-      {HeaderSearchInput}
-      {HeaderHamburder}
-      {logoutButton}
+      <div className="navHeader-width">
+        <div className="navHeader-content-left">{Logo}</div>
+        <div className="navHeader-content-right">
+          <div className="navHeader-navList-container">{NavList}</div>
+          <div className="navHeader-search-hamburger">
+            {HeaderSearchInput}
+            <div className="navHeader-hamburger">{HeaderHamburder}</div>
+          </div>
+          <div className="navHeader-logout-btn-container">{logoutButton}</div>
+        </div>
+      </div>
     </nav>
   );
 }

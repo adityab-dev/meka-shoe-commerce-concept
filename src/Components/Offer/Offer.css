@@ -1,0 +1,82 @@
+.offer-container {
+  margin-top: 2.5rem;
+
+  padding-top: 2rem;
+  margin-bottom: 0.5rem;
+
+  background: #dcf7fb77;
+
+  display: flex;
+  justify-content: center;
+}
+
+.offer-container-center {
+  width: 87.5%;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+.common-font-size {
+  font-size: 1.5rem;
+}
+
+.remove-padding {
+  padding: 0;
+}
+
+.common-padding-offer-left {
+  padding: 0.35rem 0;
+}
+
+.remove-margin {
+  margin: 0;
+}
+
+.discount {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ce091f;
+}
+
+.validity {
+  color: #e96979;
+}
+
+.via {
+  color: #d01121;
+
+  padding-right: 1rem;
+}
+
+.delivery {
+  color: #cb031d;
+}
+
+.offer-content-left > button {
+  background: #cb031d;
+  color: white;
+
+  border: none;
+  border-radius: 7.5px;
+
+  padding: 0.25rem 0.6rem;
+}
+
+.offer-partner-img:first-child {
+  width: 6rem;
+}
+
+.offer-partner-img:nth-child(2) {
+  width: 10rem;
+}
+
+.offer-partner-img-container {
+  display: flex;
+  align-items: center;
+}
+
+.offer-via-imgs {
+  display: flex;
+  align-items: center;
+}

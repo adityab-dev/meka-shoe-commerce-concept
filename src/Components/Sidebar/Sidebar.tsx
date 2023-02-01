@@ -41,7 +41,9 @@ function Sidebar() {
 
   const searchBrand = (
     <section className="search-brand-container">
-      <label htmlFor="search-brand">Brand</label>
+      <label htmlFor="search-brand" className="sidebar-label-mar-bttm sidebar-label-common-font">
+        Brand
+      </label>
       <input
         className="sidebar-inputs"
         id="search-brand"
@@ -60,7 +62,9 @@ function Sidebar() {
           id="apple"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="apple">Apple</label>
+        <label htmlFor="apple" className="sidebar-checkboxes-common-font">
+          Apple
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -72,7 +76,9 @@ function Sidebar() {
           id="microsoft"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="microsoft">Microsoft Surface</label>
+        <label htmlFor="microsoft" className="sidebar-checkboxes-common-font">
+          Microsoft 
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -84,14 +90,18 @@ function Sidebar() {
           id="samsung"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="samsung">Samsung</label>
+        <label htmlFor="samsung" className="sidebar-checkboxes-common-font">
+          Samsung
+        </label>
       </div>
     </section>
   );
 
   const range = (
-    <section className="select-range-container">
-      <label htmlFor="price">Price</label>
+    <section className="select-range-container ">
+      <label htmlFor="price" className="sidebar-label-common-font">
+        Price
+      </label>
       <input
         type="range"
         min="0"
@@ -105,7 +115,9 @@ function Sidebar() {
 
   const searchColor = (
     <section className="search-colour-contianer">
-      <label htmlFor="search-colour">Color</label>
+      <label htmlFor="search-colour" className="sidebar-label-common-font">
+        Color
+      </label>
       <input
         className="sidebar-inputs"
         id="search-color"
@@ -124,7 +136,9 @@ function Sidebar() {
           id="red"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="red">red</label>
+        <label htmlFor="red" className="sidebar-checkboxes-common-font">
+          Red
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -136,7 +150,9 @@ function Sidebar() {
           id="blue"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="blue">blue</label>
+        <label htmlFor="blue" className="sidebar-checkboxes-common-font">
+          Blue
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -148,14 +164,18 @@ function Sidebar() {
           id="green"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="green">green</label>
+        <label htmlFor="green" className="sidebar-checkboxes-common-font">
+          Green
+        </label>
       </div>
     </section>
   );
 
   const searchSize = (
     <section className="search-size-container">
-      <label htmlFor="search-size">Size</label>
+      <label htmlFor="search-size" className="sidebar-label-mar-bttm sidebar-label-common-font">
+        Size
+      </label>
       <input
         className="sidebar-inputs"
         id="search-size"
@@ -177,7 +197,9 @@ function Sidebar() {
           id="30"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="30">30</label>
+        <label htmlFor="30" className="sidebar-checkboxes-common-font">
+          30
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -189,7 +211,9 @@ function Sidebar() {
           id="31"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="31">31</label>
+        <label htmlFor="31" className="sidebar-checkboxes-common-font">
+          31
+        </label>
       </div>
 
       <div className="sidebar-label-checkbox">
@@ -201,26 +225,30 @@ function Sidebar() {
           id="32"
           onChange={checkboxInteractionHandler}
         />
-        <label htmlFor="32">32</label>
+        <label htmlFor="32" className="sidebar-checkboxes-common-font">
+          32
+        </label>
       </div>
     </section>
   );
 
-  const SearchBrand = (
-    <section>
-      {searchBrand}
-      {range}
-      {searchColor}
-      {searchSize}
+  const Search = (
+    <section className="sidebar-contant">
+      <div className="sidebar-sections-mar-bttm">{searchBrand}</div>
+      <div className="sidebar-sections-mar-bttm">{range}</div>
+      <div className="sidebar-sections-mar-bttm">{searchColor}</div>
+      <div className="sidebar-sections-mar-bttm">{searchSize}</div>
     </section>
   );
 
-  const SectionHeading = <h2>Filter</h2>;
+  const SectionHeading = <h3>Filter</h3>;
 
   return (
     <aside className="sidebar-container">
-      {SectionHeading}
-      {SearchBrand}
+      <div className="sidebar-content-align">
+        {SectionHeading}
+        {Search}
+      </div>
     </aside>
   );
 }

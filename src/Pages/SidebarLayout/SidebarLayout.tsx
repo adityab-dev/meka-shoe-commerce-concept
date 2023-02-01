@@ -1,15 +1,21 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 
-import './SidebarLayout.css'
+import "./SidebarLayout.css";
 
 function SidebarLayout() {
-    return (
-        <div className="side-layout-container">
-            <Sidebar />
-            <Outlet />
+  return (
+    <div className="side-layout-container">
+      <div className="side-layout-center">
+        <div className="sidebarlayout-sidebar-container">
+          <Sidebar />
         </div>
-    );
+      </div>
+      <div>
+        <Outlet />
+      </div>
+    </div>
+  );
 }
 
 export default SidebarLayout;

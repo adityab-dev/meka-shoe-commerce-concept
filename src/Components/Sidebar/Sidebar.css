@@ -1,12 +1,19 @@
 .sidebar-container {
-  width: 25%;
+  width: 92.5%;
 
   background: #760909;
 
   color: white;
 
-  border-top-right-radius: 10%;
-  border-bottom-right-radius: 10%;
+  border-top-right-radius: 35px;
+  border-bottom-right-radius: 35px;
+
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebar-container > h2 {
+  margin: 0;
 }
 
 .search-brand-container {
@@ -18,25 +25,31 @@
   height: 1rem;
   width: 1rem;
 
-  margin-right: .6rem;
+  margin-right: 0.6rem;
 }
 
 *:focus {
   outline: none;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
 }
 
 .sidebar-inputs {
   width: 90%;
+  height: 1.75rem;
 
-  border-radius: .25rem;
+  font-size: 1.1rem;
+  text-indent: .5rem;
+
+  border-radius: 0.25rem;
+
+  margin-bottom: .5rem;
 }
 
 .select-range-container {
@@ -44,10 +57,33 @@ input[type=number]::-webkit-outer-spin-button {
   flex-direction: column;
 }
 
-input[type=range] {
+input[type="range"] {
   width: 75%;
 }
 
 section > label {
   font-size: 1.1rem;
+}
+
+.sidebar-content-align {
+  width: 92.5%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-sections-mar-bttm {
+  margin-bottom: 1rem;
+}
+
+.sidebar-label-mar-bttm {
+  margin-bottom: .7rem;
+}
+
+.sidebar-label-common-font {
+  font-size: 1.5rem;
+}
+
+.sidebar-checkboxes-common-font {
+  font-size: 1.2rem;
 }
