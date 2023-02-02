@@ -52,7 +52,7 @@ function ProductsContent(props: { image: string }) {
           </div>
         </div>
         <button
-          className="product-btn"
+          className={`product-btn ${!product.quantity ? 'disabled-btn' : ''}`}
           type="button"
           disabled={!product.quantity}
           onClick={() =>

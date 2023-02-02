@@ -2,6 +2,7 @@ export type user = {
   username: string;
   password: string;
   cart: CartItem[];
+  totalPrice: number;
 };
 
 export type CartItem = {

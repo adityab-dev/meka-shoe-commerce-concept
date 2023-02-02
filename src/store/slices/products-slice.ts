@@ -107,11 +107,8 @@ const productsSlice = createSlice({
       const { brands, colors, sizes, price } = state.appliedFilters;
 
       if (brands.length === 0 && colors.length === 0 && sizes.length === 0 && price === "0") {
-        console.log("inside if");
         state.filteredProducts = products;
       } else {
-        console.log("inside else");
-
         // * removes "" from list.
 
         let uniqueBrands = [...brands];
@@ -199,8 +196,7 @@ const productsSlice = createSlice({
 
         if (price === "0") filter_brands_colors_sizes_price = filter_brands_colors_sizes;
         else {
-          console.log("inside price else");
-          for (let product of filter_brands_colors_sizes) {
+           for (let product of filter_brands_colors_sizes) {
             for (let productByPrice of filteredPrice) {
               // * if ids are same, products are same returning any will work.
               if (product.id === productByPrice.id)

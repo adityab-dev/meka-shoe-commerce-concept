@@ -19,6 +19,8 @@
   border-radius: 0.5rem;
 
   padding: 0.5rem 1.2rem;
+
+  cursor: pointer;
 }
 
 .content-container > article {
@@ -56,15 +58,9 @@
 .products-big-img-container > img {
   width: inherit;
   height: inherit;
-
-  /* -webkit-box-shadow: 16px 19px 4px -14px rgba(0, 0, 0, 0.56);
-  -moz-box-shadow: 16px 19px 4px -14px rgba(0, 0, 0, 0.56);
-  box-shadow: 16px 19px 4px -14px rgba(0, 0, 0, 0.56); */
 }
 
 .content-article {
-  /* background: #ca021c; */
-
   text-align: center;
   font-size: 1.4rem;
 
@@ -90,4 +86,10 @@
 .content-article-top {
   background: #ca021c;
   border-radius: 22.5px;
+}
+
+.disabled-btn {
+  background: rgb(211, 204, 204);
+
+  color: black;
 }

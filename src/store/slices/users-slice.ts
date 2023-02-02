@@ -3,11 +3,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { user } from "../../models/user-model";
 
 const usersList: user[] = [
-  { username: "1", password: "1", cart: [] },
-  { username: "2", password: "2", cart: [] },
-  { username: "3", password: "3", cart: [] },
-  { username: "4", password: "4", cart: [] },
-  { username: "5", password: "5", cart: [] },
+  { username: "1", password: "1", cart: [], totalPrice: 0 },
+  { username: "2", password: "2", cart: [], totalPrice: 0 },
+  { username: "3", password: "3", cart: [], totalPrice: 0 },
+  { username: "4", password: "4", cart: [], totalPrice: 0 },
+  { username: "5", password: "5", cart: [], totalPrice: 0 },
 ];
 
 type UserData = {
@@ -17,7 +17,7 @@ type UserData = {
 
 const usersData: UserData = {
   usersList: usersList,
-  loginStatus: { loggedInUser: "", isLoggedIn: true },
+  loginStatus: { loggedInUser: "", isLoggedIn: false },
 };
 
 const usersSlice = createSlice({
@@ -91,6 +91,17 @@ const usersSlice = createSlice({
 
       if (!itemAlreadyExists) cartOfUser.push({ ...product, quantityInCart: 1 });
       if (itemAlreadyExists) cartOfUser[indexOfCartItem].quantityInCart += 1;
+
+      let totalPriceProduct = 0;
+      let totalPriceProducts = 0;
+
+      for (let cartItem of cartOfUser) {
+        totalPriceProduct = cartItem.quantityInCart * +cartItem.price;
+
+        totalPriceProducts += totalPriceProduct;
+      }
+
+      state.usersList[indexOfUser].totalPrice = totalPriceProducts;
     },
 
     logout(state) {
@@ -117,11 +128,22 @@ const usersSlice = createSlice({
 
       if (type === "decrement" && quantityInCart < 5)
         state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart += 1;
-      if (type === "increment" && quantityInCart > 0) {
+
+      if (type === "increment" && quantityInCart > 0)
         state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart -= 1;
-      }
+
       quantityInCart = state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart;
       if (quantityInCart === 0) state.usersList[indexOfUser].cart.splice(indexOfProduct, 1);
+
+      let totalPriceProducts = 0;
+      let totalPriceProduct = 0;
+
+      for (let cartItem of cart) {
+        totalPriceProduct = cartItem.quantityInCart * +cartItem.price;
+        totalPriceProducts += totalPriceProduct;
+      }
+
+      usersList[indexOfUser].totalPrice = totalPriceProducts;
     },
   },
 });

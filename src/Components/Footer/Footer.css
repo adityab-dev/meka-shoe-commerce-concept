@@ -60,6 +60,11 @@
 
 .footer-reach > input {
   height: 1.9rem;
+  
+  font-size: 1.1rem;
+  text-indent: .5rem;
+
+  border-radius: 7.5px;
 }
 
 .footer-reach > button {

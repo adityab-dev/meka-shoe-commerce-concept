@@ -32,10 +32,10 @@ function MainNavigationHeader() {
     dispatch(resetFilters());
   }
 
-  // currently logs out in 100 min
+  // user logs out in 10 min
   useEffect(() => {
     // 10 mins
-    const delay_ms = 60000000;
+    const delay_ms = 6000000;
 
     setTimeout(() => {
       dispatch(logout());
