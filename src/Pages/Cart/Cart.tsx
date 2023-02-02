@@ -36,31 +36,6 @@ function Cart() {
   const cartOfUser = usersList[indexOfUser].cart;
 
   const mappedCartOfUser = cartOfUser.map((cartItem) => {
-    // return (
-    //   <div key={cartItem.id}>
-    //     <img src={cartItem.thumbnail} alt="thumbnail" />;<div>{cartItem.brand}</div>
-    //     <div>
-    //       {cartItem.colors} - {cartItem.sizes}
-    //     </div>
-    //     <div>{cartItem.price}</div>
-    //     <button
-    //       type="button"
-    //       disabled={cartItem.quantityInCart === 5 ? true : false}
-    //       onClick={() => add1toCartFromCart(loggedInUser, cartItem.id, "decrement")}
-    //     >
-    //       +
-    //     </button>
-    //     <div>{cartItem.quantityInCart}</div>
-    //     <button
-    //       type="button"
-    //       onClick={() => add1toCartFromCart(loggedInUser, cartItem.id, "increment")}
-    //       disabled={cartItem.quantityInCart === 0 ? true : false}
-    //     >
-    //       -
-    //     </button>
-    //   </div>
-    // );
-
     return (
       <div
         className="product-details-container-center cart-dark-maroon-bg border-bottom"
@@ -106,31 +81,6 @@ function Cart() {
       </div>
     );
   });
-
-  // const productDetails = (
-  //   <div className="product-details-container cart-dark-maroon-bg color-white border-bottom">
-  //     <div className="product-details-product">
-  //       <img src={undefined} alt="product" />
-  //       <div>
-  //         <div className="company-name-font-size ">Company Name</div>
-  //         <div className="product-name-font-size ">Product Name</div>
-  //         <div className="price-font-size ">Price</div>
-  //       </div>
-  //     </div>
-
-  //     <div className="cart-cartQuantity text-center">
-  //       <button type="button" className="cart-light-red-bg color-white">
-  //         -
-  //       </button>
-  //       <div className="cart-itemQuantity-font-size color-white">0</div>
-  //       <button type="button" className="cart-light-red-bg color-white">
-  //         +
-  //       </button>
-  //     </div>
-
-  //     <div className="price-font-size text-right cart-totalAmunt">Price * times</div>
-  //   </div>
-  // );
 
   const cartLayout = (
     <div className="cart-product-info-center cart-dark-red-bg">
@@ -192,7 +142,6 @@ function Cart() {
         <div className="cart-content-left">
           {cartLayout}
           {mappedCartOfUser}
-          {/* {productDetails} */}
         </div>
         <div className="cart-content-right cart-dak-maroon-bg">{cartPriceDetails}</div>
       </div>

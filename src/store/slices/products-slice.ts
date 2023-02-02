@@ -161,52 +161,42 @@ const productsSlice = createSlice({
         // * comparing common elements b/w 4 arrays.
 
         //  * comparing brands with colors
-        let filter_brands_colors: Product[] = [];
 
-        if (!filteredBrands.length && !filteredColors.length) filter_brands_colors = products;
-        else if (filteredColors.length && !filteredBrands.length)
-          filter_brands_colors = filteredColors;
-        else if (filteredBrands.length && !filteredColors.length)
-          filter_brands_colors = filteredBrands;
-        else if (filteredBrands.length && filteredColors.length) {
-          for (let productByBrand of filteredBrands) {
-            for (let productByColors of filteredColors) {
-              if (productByBrand.id === productByColors.id)
-                // * if ids are same, products are same returning any will work.
-                filter_brands_colors.push(productByBrand);
-            }
+        // * old one
+
+        let initialArr = [filteredBrands, filteredColors, filteredPrice, filteredSizes];
+
+        let itemsWithLen = initialArr.filter((arr) => arr.length > 0);
+
+        let numberOfAciveFilters = itemsWithLen.length;
+
+        let allIds: Array<number> = [];
+
+        for (let item of itemsWithLen) {
+          for (let product of item) {
+            allIds.push(product.id);
           }
         }
 
-        //  * comparing brand & colors with sizes
-        let filter_brands_colors_sizes: Product[] = [];
+        let sortedIds = allIds.sort((a, b) => a - b);
 
-        if (!filteredSizes.length) filter_brands_colors_sizes = filter_brands_colors;
-        else if (filteredSizes.length) {
-          for (let product of filter_brands_colors) {
-            for (let productBySize of filteredSizes) {
-              if (productBySize.id === product.id)
-                // * if ids are same, products are same returning any will work.
-                filter_brands_colors_sizes.push(productBySize);
-            }
+        let isSameCounter = 0;
+        let productIds: Array<number> = [];
+
+        for (let index = 0; index < sortedIds.length; index += 1) {
+          if (sortedIds[index] === sortedIds[index + 1]) {
+            isSameCounter += 1;
+          } else {
+            isSameCounter = 0;
           }
+          if (isSameCounter === numberOfAciveFilters - 1) productIds.push(sortedIds[index]);
         }
 
-        let filter_brands_colors_sizes_price: Product[] = [];
+        let filteredProducts: Product[] = [];
 
-        if (price === "0") filter_brands_colors_sizes_price = filter_brands_colors_sizes;
-        else {
-           for (let product of filter_brands_colors_sizes) {
-            for (let productByPrice of filteredPrice) {
-              // * if ids are same, products are same returning any will work.
-              if (product.id === productByPrice.id)
-                filter_brands_colors_sizes_price.push(productByPrice);
-            }
-          }
-        }
+        filteredProducts = products.filter((product) => productIds.includes(product.id));
 
-        // state.filteredProducts = filter_brands_colors_sizes_price;
-        state.filteredProducts = filter_brands_colors_sizes_price;
+        state.filteredProducts = filteredProducts;
       }
     },
     resetFilters(state) {
