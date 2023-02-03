@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import products, { Product } from "../../Assets/dummyProductsData";
 
-import { brands, sizes, colors, price } from "../../Components/Sidebar/Sidebar";
+import { brands, sizes, colors, price } from '../../paths/names';
 
 type AppliedFilters = {
   brands: Array<string>;
@@ -205,7 +205,7 @@ const productsSlice = createSlice({
     },
   },
 });
-
+  
 export const {
   productAddedToCart,
   checkboxInteraction,

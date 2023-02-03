@@ -20,6 +20,19 @@ const usersData: UserData = {
   loginStatus: { loggedInUser: "", isLoggedIn: false },
 };
 
+export type CartInteractionPayload = {
+  id: number;
+  title: string;
+  price: string;
+  brand: string;
+  colors: Array<string>;
+  sizes: Array<number>;
+  thumbnail: string;
+  quantity: number;
+  username: string;
+  type: string;
+};
+
 const usersSlice = createSlice({
   name: "users",
   initialState: usersData,
@@ -38,20 +51,12 @@ const usersSlice = createSlice({
       });
     },
 
-    addToCart(
-      state,
-      action: PayloadAction<{
-        id: number;
-        title: string;
-        price: string;
-        brand: string;
-        colors: Array<string>;
-        sizes: Array<number>;
-        thumbnail: string;
-        quantity: number;
-        username: string;
-      }>
-    ) {
+    logout(state) {
+      const defaultLoginStatus = { loggedInUser: "", isLoggedIn: false };
+      state.loginStatus = defaultLoginStatus;
+    },
+
+    cartInteraction(state, action: PayloadAction<CartInteractionPayload>) {
       const {
         id,
         brand,
@@ -62,9 +67,19 @@ const usersSlice = createSlice({
         quantity,
         title,
         username: loggedInUser,
+        type,
       } = action.payload;
 
-      const product = { id, brand, title, price, sizes, colors, thumbnail, quantity };
+      const product = {
+        id,
+        brand,
+        title,
+        price,
+        sizes,
+        colors,
+        thumbnail,
+        quantity,
+      };
 
       const { usersList } = state;
 
@@ -72,15 +87,15 @@ const usersSlice = createSlice({
       let indexOfCartItem: number = 0;
 
       // gets us index of user. which will be used to operate on that user's cart.
-      usersList.findIndex((user, index) => {
-        if (user.username === loggedInUser) indexOfUser = index;
-        return null;
-      });
+      indexOfUser = usersList.findIndex(
+        (user) => user.username === loggedInUser
+      );
 
       // if item already exists quantityAdded += 1; else add Item to list
       let itemAlreadyExists = false;
 
       const cartOfUser = state.usersList[indexOfUser].cart;
+
 
       for (let index = 0; index < cartOfUser.length; index += 1) {
         if (cartOfUser[index].id === id) {
@@ -89,8 +104,30 @@ const usersSlice = createSlice({
         }
       }
 
-      if (!itemAlreadyExists) cartOfUser.push({ ...product, quantityInCart: 1 });
-      if (itemAlreadyExists) cartOfUser[indexOfCartItem].quantityInCart += 1;
+
+      let quantityInCart = 0;
+
+      // *
+
+      if (!itemAlreadyExists) {
+        if (type === "decrement")
+          cartOfUser.push({ ...product, quantityInCart: 1 });
+      }
+
+      // *
+
+      if (itemAlreadyExists) {
+        quantityInCart = cartOfUser[indexOfCartItem].quantityInCart;
+
+        if (type === "decrement" && quantityInCart < 5)
+          cartOfUser[indexOfCartItem].quantityInCart += 1;
+        else if (type === "increment" && quantityInCart > 0)
+          cartOfUser[indexOfCartItem].quantityInCart -= 1;
+      }
+
+      quantityInCart = cartOfUser[indexOfCartItem].quantityInCart;
+
+      if (quantityInCart === 0) cartOfUser.splice(indexOfCartItem, 1);
 
       let totalPriceProduct = 0;
       let totalPriceProducts = 0;
@@ -103,50 +140,8 @@ const usersSlice = createSlice({
 
       state.usersList[indexOfUser].totalPrice = totalPriceProducts;
     },
-
-    logout(state) {
-      const defaultLoginStatus = { loggedInUser: "", isLoggedIn: false };
-      state.loginStatus = defaultLoginStatus;
-    },
-
-    addToCartFromCartPage(
-      state,
-      action: PayloadAction<{ id: number; username: string; type: string }>
-    ) {
-      // ! NOTE: in usersList quantity doesn't change since quantityToCart is changed not quantity.
-      const { id, username, type } = action.payload;
-
-      const { usersList } = state;
-
-      const indexOfUser = usersList.findIndex((user) => user.username === username);
-
-      const cart = state.usersList[indexOfUser].cart;
-
-      const indexOfProduct = cart.findIndex((cartItem) => cartItem.id === +id);
-
-      let quantityInCart = cart[indexOfProduct].quantityInCart;
-
-      if (type === "decrement" && quantityInCart < 5)
-        state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart += 1;
-
-      if (type === "increment" && quantityInCart > 0)
-        state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart -= 1;
-
-      quantityInCart = state.usersList[indexOfUser].cart[indexOfProduct].quantityInCart;
-      if (quantityInCart === 0) state.usersList[indexOfUser].cart.splice(indexOfProduct, 1);
-
-      let totalPriceProducts = 0;
-      let totalPriceProduct = 0;
-
-      for (let cartItem of cart) {
-        totalPriceProduct = cartItem.quantityInCart * +cartItem.price;
-        totalPriceProducts += totalPriceProduct;
-      }
-
-      usersList[indexOfUser].totalPrice = totalPriceProducts;
-    },
   },
 });
 
-export const { loginRequest, addToCart, logout, addToCartFromCartPage } = usersSlice.actions;
+export const { loginRequest, logout, cartInteraction } = usersSlice.actions;
 export default usersSlice;
